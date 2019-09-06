@@ -7,19 +7,15 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
+      userName: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       proccessName: {
         type: Sequelize.STRING,
         allowNull: false,
       },
       horario: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
-      createdAt: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
-      updatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
       },

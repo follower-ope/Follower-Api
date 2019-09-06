@@ -4,15 +4,15 @@ class Activitie extends Model {
   static init(sequelize) {
     super.init(
       {
+        userName: Sequelize.STRING,
         proccessName: Sequelize.STRING,
         horario: Sequelize.DATE,
       },
       {
         sequelize,
+        timestamps: false,
       }
     );
-
-    console.log(this);
 
     return this;
   }
