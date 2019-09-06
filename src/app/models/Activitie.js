@@ -12,7 +12,7 @@ class Activitie extends Model {
       }
     );
 
-    console.log(sequelize);
+    console.log(this);
 
     return this;
   }
