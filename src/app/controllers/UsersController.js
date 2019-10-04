@@ -1,4 +1,5 @@
 import User from '../models/User';
+import Activitie from '../models/Activitie';
 
 class UsersController {
     async index(req, res) {
@@ -20,6 +21,14 @@ class UsersController {
     async store(req, res) {
         const { userName, name, role } = req.body;
 
+        var user_exist = await User.findAll({
+            where: { userName: userName },
+        });
+
+        if (user_exist.length > 0){
+            return res.status(400).json("UserName ja utilizado no sistema!")
+        }
+
         const user = await User.create({
             userName,
             name,
@@ -30,8 +39,14 @@ class UsersController {
     }
 
     async update(req, res) {
-        console.log(req.params)
-        console.log(req.body)
+        var user = await User.findAll({
+            where: { userName: req.params.username },
+        });
+
+        if (user.length == 0){
+            return res.status(400).json("Usuario nao encontrado na base de dados!")
+        }
+
         const response = await User.update(
             { name: req.body.name,
               role: req.body.role
@@ -47,6 +62,24 @@ class UsersController {
     }
 
     async delete(req, res) {
+        var activities = await Activitie.findAll({
+            where: { userName: req.params.username },
+        });
+
+        console.log(activities)
+
+        if (activities.length > 0){
+            return res.status(400).json("Nao eh possivel excluir um Usuario que possua atividades vinculadas no sistema!")
+        }
+
+        var user = await User.findAll({
+            where: { userName: req.params.username },
+        });
+
+        if (user.length == 0){
+            return res.status(400).json("Usuario nao encontrado na base de dados!")
+        }
+
         const response = await User.destroy({
             where: { userName : req.params.username}
         });
