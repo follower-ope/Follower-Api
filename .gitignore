@@ -8,8 +8,11 @@ yarn-error.log*
 # node modules
 node_modules
 
-#env
+# env
 .env
 
 # sqlite db
 follower.sqlite
+
+# vscode
+.vscode
