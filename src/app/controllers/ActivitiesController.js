@@ -2,7 +2,7 @@ import Activitie from '../models/Activitie';
 
 class ActivitiesController {
   async index(req, res) {
-    var activities = await Activitie.findAll();
+    const activities = await Activitie.findAll();
 
     return res.json(activities);
   }
@@ -10,7 +10,7 @@ class ActivitiesController {
   async userActivities(req, res) {
     const { username } = req.params;
 
-    var activities = await Activitie.findAll({
+    const activities = await Activitie.findAll({
       where: { userName: username },
     });
 
