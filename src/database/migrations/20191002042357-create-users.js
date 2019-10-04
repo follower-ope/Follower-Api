@@ -14,12 +14,11 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
-        primaryKey: false,
+        primaryKey: true,
       },
       userName: {
         type: Sequelize.STRING,
         allowNull: false,
-        primaryKey: true,
       },
       name: {
         type: Sequelize.STRING,
