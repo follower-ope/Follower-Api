@@ -1,19 +1,25 @@
+'use strict';
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('activities', {
+    return queryInterface.createTable('projects_artists', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      proccessName: {
+      description: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      timestamp: {
-        type: 'TIMESTAMP',
-        allowNull: false,
+      projectId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'projects',
+          key: 'id'
+        },
+        allowNull: false
       },
       userId: {
         type: Sequelize.INTEGER,
@@ -23,18 +29,18 @@ module.exports = {
         },
         allowNull: false
       },
-      processId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'softwares',
-          key: 'id'
-        },
-        allowNull: false
+      startDate: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      finishDate: {
+        type: Sequelize.DATE,
+        allowNull: true,
       },
     });
   },
 
-  down: queryInterface => {
-    return queryInterface.dropTable('activities');
+  down: (queryInterface, Sequelize) => {
+    return queryInterface.dropTable('projects_artists');
   }
 };

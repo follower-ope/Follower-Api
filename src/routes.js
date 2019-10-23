@@ -3,6 +3,7 @@ import { Router } from 'express';
 import ActivitiesController from './app/controllers/ActivitiesController';
 import ProjectsController from './app/controllers/ProjectController';
 import UsersController from './app/controllers/UsersController';
+import UsersActivitiesController from './app/controllers/UsersActivitiesController';
 
 const routes = new Router();
 
@@ -21,5 +22,7 @@ routes.get('/users', UsersController.index);
 routes.post('/users', UsersController.store);
 routes.put('/users/:username', UsersController.update);
 routes.delete('/users/:username', UsersController.delete);
+
+routes.get('/usersActivities', UsersActivitiesController.index);
 
 export default routes;

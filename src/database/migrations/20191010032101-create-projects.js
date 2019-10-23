@@ -2,37 +2,37 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-   return queryInterface.createTable('users', {
+    return queryInterface.createTable('projetcs', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
-        //primaryKey: true,
+        primaryKey: true,
       },
-      userName: {
+      title: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      email: {
+      description: {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      profileId: {
+      projectTime: {
+        type: Sequelize.FLOAT,
+        allowNull: true,
+      },
+      owner: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'profiles',
+          model: 'users',
           key: 'id'
         },
-        allowNull: true
+        allowNull: false
       },
     });
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('users');
+    return queryInterface.dropTable('projects');
   }
 };

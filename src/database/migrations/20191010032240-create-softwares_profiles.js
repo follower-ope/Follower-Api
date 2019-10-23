@@ -1,23 +1,30 @@
+'use strict';
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('projects', {
+    return queryInterface.createTable('softwares_profiles', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      name: {
-        type: Sequelize.STRING,
+      isProductive: {
+        type: Sequelize.BOOLEAN,
         allowNull: false,
       },
-      time: {
+      profileId: {
         type: Sequelize.INTEGER,
+        references: {
+          model: 'users',
+          key: 'id'
+        },
+        allowNull: false
       },
     });
   },
 
-  down: queryInterface => {
+  down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('projects');
-  },
+  }
 };
