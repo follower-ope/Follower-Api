@@ -1,8 +1,6 @@
-'use strict';
-
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('projetcs', {
+    return queryInterface.createTable('projects', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -17,22 +15,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      projectTime: {
-        type: Sequelize.FLOAT,
-        allowNull: true,
-      },
-      owner: {
+      time: {
         type: Sequelize.INTEGER,
-        references: {
-          model: 'users',
-          key: 'id'
-        },
-        allowNull: false
+        allowNull: true,
       },
     });
   },
 
-  down: (queryInterface, Sequelize) => {
+  down: queryInterface => {
     return queryInterface.dropTable('projects');
-  }
+  },
 };

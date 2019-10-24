@@ -3,10 +3,11 @@ import Sequelize from 'sequelize';
 import Activitie from '../app/models/Activitie';
 import Projects from '../app/models/Projects';
 import User from '../app/models/User';
+import Profiles from '../app/models/Profile';
 
 import databaseConfig from '../config/database';
 
-const models = [Activitie, Projects, User];
+const models = [Activitie, Projects, User, Profiles];
 
 class Database {
   constructor() {

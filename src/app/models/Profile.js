@@ -1,12 +1,10 @@
 import Sequelize, { Model } from 'sequelize';
 
-class Projects extends Model {
+class Profile extends Model {
   static init(sequelize) {
     super.init(
       {
-        title: Sequelize.STRING,
         description: Sequelize.STRING,
-        time: Sequelize.INTEGER,
       },
       {
         sequelize,
@@ -18,4 +16,4 @@ class Projects extends Model {
   }
 }
 
-export default Projects;
+export default Profile;
