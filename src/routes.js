@@ -25,7 +25,6 @@ routes.put('/users/:username', UsersController.update);
 routes.delete('/users/:username', UsersController.delete);
 
 routes.get('/softwares', SoftwaresController.index);
-routes.post('/softwares', SoftwaresController.store);
 
 routes.get('/usersActivities', UsersActivitiesController.index);
 
