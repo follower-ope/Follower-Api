@@ -16,6 +16,8 @@ class User extends Model {
       }
     );
 
+    User.removeAttribute('id');
+
     return this;
   }
 

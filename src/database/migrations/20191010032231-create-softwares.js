@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('softwares', {
@@ -9,15 +7,22 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      processName: {
+      process_name: {
         type: Sequelize.STRING,
         allowNull: false,
+      },
+      name: {
+        type: Sequelize.STRING,
+      },
+      productive: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
       },
     });
   },
 
-  down: (queryInterface, Sequelize) => {
+  down: queryInterface => {
     return queryInterface.dropTable('projects');
-  }
-
+  },
 };

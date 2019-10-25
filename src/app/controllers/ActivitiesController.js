@@ -7,11 +7,11 @@ class ActivitiesController {
     return res.json(activities);
   }
 
-  async userActivities(req, res) {
+  async show(req, res) {
     const { username } = req.params;
 
     const activities = await Activitie.findAll({
-      where: { userName: username },
+      where: { username },
     });
 
     return res.json(activities);

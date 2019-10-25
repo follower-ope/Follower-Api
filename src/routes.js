@@ -4,10 +4,11 @@ import ActivitiesController from './app/controllers/ActivitiesController';
 import ProjectsController from './app/controllers/ProjectController';
 import UsersController from './app/controllers/UsersController';
 import UsersActivitiesController from './app/controllers/UsersActivitiesController';
+import SoftwaresController from './app/controllers/SoftwaresController';
 
 const routes = new Router();
 
-routes.get('/activities/:username', ActivitiesController.userActivities);
+routes.get('/activities/:username', ActivitiesController.show);
 routes.get('/activities', ActivitiesController.index);
 routes.post('/activities', ActivitiesController.store);
 
@@ -22,6 +23,9 @@ routes.get('/users', UsersController.index);
 routes.post('/users', UsersController.store);
 routes.put('/users/:username', UsersController.update);
 routes.delete('/users/:username', UsersController.delete);
+
+routes.get('/softwares', SoftwaresController.index);
+routes.post('/softwares', SoftwaresController.store);
 
 routes.get('/usersActivities', UsersActivitiesController.index);
 

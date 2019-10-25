@@ -7,34 +7,27 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      proccessName: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      timestamp: {
-        type: 'TIMESTAMP',
-        allowNull: false,
-      },
-      userId: {
+      username: {
         type: Sequelize.INTEGER,
         references: {
           model: 'users',
-          key: 'id'
+          key: 'username',
         },
-        allowNull: false
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
-      processId: {
+      softwares_id: {
         type: Sequelize.INTEGER,
         references: {
           model: 'softwares',
-          key: 'id'
+          key: 'id',
         },
-        allowNull: false
+        allowNull: false,
       },
     });
   },
 
   down: queryInterface => {
     return queryInterface.dropTable('activities');
-  }
+  },
 };

@@ -1,12 +1,12 @@
 import Sequelize, { Model } from 'sequelize';
 
-class Activitie extends Model {
+class Softwares extends Model {
   static init(sequelize) {
     super.init(
       {
-        username: Sequelize.STRING,
-        proccess: Sequelize.STRING,
-        time: Sequelize.DATE,
+        process_name: Sequelize.STRING,
+        name: Sequelize.STRING,
+        productive: Sequelize.BOOLEAN,
       },
       {
         sequelize,
@@ -18,4 +18,4 @@ class Activitie extends Model {
   }
 }
 
-export default Activitie;
+export default Softwares;

@@ -2,7 +2,7 @@ import Profile from '../models/Profile';
 
 class ProfileController {
   async store(description) {
-    const profile = await Profile.findOrCreate({
+    await Profile.findOrCreate({
       where: {
         description,
       },
@@ -10,8 +10,6 @@ class ProfileController {
         description,
       },
     });
-
-    return profile;
   }
 }
 

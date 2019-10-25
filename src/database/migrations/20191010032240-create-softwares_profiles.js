@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('softwares_profiles', {
@@ -17,14 +15,14 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'users',
-          key: 'id'
+          key: 'id',
         },
-        allowNull: false
+        allowNull: false,
       },
     });
   },
 
-  down: (queryInterface, Sequelize) => {
+  down: queryInterface => {
     return queryInterface.dropTable('projects');
-  }
+  },
 };
