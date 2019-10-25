@@ -1,4 +1,6 @@
 import Activitie from '../models/Activitie';
+import User from '../models/User';
+import Softwares from '../models/Softwares';
 
 class ActivitiesController {
   async index(req, res) {
@@ -18,12 +20,31 @@ class ActivitiesController {
   }
 
   async store(req, res) {
-    const { userName, proccessName, horario } = req.body;
+    const { username, process_name, software_name: name, time } = req.body;
+
+    await User.findOrCreate({
+      where: {
+        username,
+      },
+      defaults: {
+        username,
+      },
+    });
+
+    await Softwares.findOrCreate({
+      where: {
+        process_name,
+      },
+      defaults: {
+        process_name,
+        name,
+      },
+    });
 
     const activitie = await Activitie.create({
-      userName,
-      proccessName,
-      horario,
+      username,
+      softwares_id: process_name,
+      time,
     });
 
     return res.json(activitie);

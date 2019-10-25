@@ -1,4 +1,3 @@
-import { Sequelize } from 'sequelize';
 import User from '../models/User';
 import Activitie from '../models/Activitie';
 
@@ -20,12 +19,10 @@ class UsersController {
   }
 
   async store(req, res) {
-    const { Op } = Sequelize;
-
-    const { username, email } = req.body;
+    const { username } = req.body;
 
     const userExist = await User.findOne({
-      where: { [Op.or]: [{ username }, { email }] },
+      where: { username },
     });
 
     if (userExist) {

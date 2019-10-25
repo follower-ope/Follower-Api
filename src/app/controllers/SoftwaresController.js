@@ -17,6 +17,8 @@ class SoftwaresController {
     await Softwares.create({
       process_name,
       name,
+    }).then(x => {
+      return x.get('id');
     });
   }
 

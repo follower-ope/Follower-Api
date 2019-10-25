@@ -14,6 +14,8 @@ class Softwares extends Model {
       }
     );
 
+    Softwares.removeAttribute('id');
+
     return this;
   }
 }

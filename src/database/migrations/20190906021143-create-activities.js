@@ -17,11 +17,15 @@ module.exports = {
         onDelete: 'CASCADE',
       },
       softwares_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         references: {
           model: 'softwares',
-          key: 'id',
+          key: 'process_name',
         },
+        allowNull: false,
+      },
+      time: {
+        type: Sequelize.DATE,
         allowNull: false,
       },
     });
