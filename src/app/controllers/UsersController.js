@@ -2,94 +2,91 @@ import User from '../models/User';
 import Activitie from '../models/Activitie';
 
 class UsersController {
-    async index(req, res) {
-        var users = await User.findAll();
+  async index(req, res) {
+    const users = await User.findAll();
 
-        return res.json(users);
+    return res.json(users);
+  }
+
+  async show(req, res) {
+    const { username } = req.params;
+
+    const user = await User.findAll({
+      where: { username },
+    });
+
+    return res.json(user);
+  }
+
+  async store(req, res) {
+    const { username } = req.body;
+
+    const userExist = await User.findOne({
+      where: { username },
+    });
+
+    if (userExist) {
+      return res.status(400).json({ error: 'User alrady exists' });
     }
 
-    async show(req, res) {
-        const { username } = req.params
+    const user = await User.create(req.body);
 
-        var user = await User.findAll({
-            where: { userName: username },
-        });
+    return res.json(user);
+  }
 
-        return res.json(user);
+  async update(req, res) {
+    const user = await User.findAll({
+      where: { userName: req.params.username },
+    });
+
+    if (user.length === 0) {
+      return res.status(400).json('Usuario nao encontrado na base de dados!');
     }
 
-    async store(req, res) {
-        const { userName, name, role } = req.body;
+    const response = await User.update(
+      {
+        name: req.body.name,
+        role: req.body.role,
+      },
+      { where: { userName: req.params.username } }
+    );
 
-        var user_exist = await User.findAll({
-            where: { userName: userName },
-        });
+    if (response) {
+      return res.status(200).json('Usuario alterado com sucesso!');
+    }
+    return res.status(400).json('Falha na alteracao do Usuario!');
+  }
 
-        if (user_exist.length > 0){
-            return res.status(400).json("UserName ja utilizado no sistema!")
-        }
+  async delete(req, res) {
+    const activities = await Activitie.findAll({
+      where: { userName: req.params.username },
+    });
 
-        const user = await User.create({
-            userName,
-            name,
-            role,
-        });
-
-        return res.json(user);
+    if (activities.length > 0) {
+      return res
+        .status(400)
+        .json(
+          'Nao eh possivel excluir um Usuario que possua atividades vinculadas no sistema!'
+        );
     }
 
-    async update(req, res) {
-        var user = await User.findAll({
-            where: { userName: req.params.username },
-        });
+    const user = await User.findAll({
+      where: { userName: req.params.username },
+    });
 
-        if (user.length == 0){
-            return res.status(400).json("Usuario nao encontrado na base de dados!")
-        }
-
-        const response = await User.update(
-            { name: req.body.name,
-              role: req.body.role
-            },
-            { where: { userName: req.params.username }}
-        )
-
-        if (response){
-            return res.status(200).json("Usuario alterado com sucesso!")
-        } else{
-            return res.status(400).json("Falha na alteracao do Usuario!")
-        }
+    if (user.length === 0) {
+      return res.status(400).json('Usuario nao encontrado na base de dados!');
     }
 
-    async delete(req, res) {
-        var activities = await Activitie.findAll({
-            where: { userName: req.params.username },
-        });
+    const response = await User.destroy({
+      where: { userName: req.params.username },
+    });
 
-        console.log(activities)
-
-        if (activities.length > 0){
-            return res.status(400).json("Nao eh possivel excluir um Usuario que possua atividades vinculadas no sistema!")
-        }
-
-        var user = await User.findAll({
-            where: { userName: req.params.username },
-        });
-
-        if (user.length == 0){
-            return res.status(400).json("Usuario nao encontrado na base de dados!")
-        }
-
-        const response = await User.destroy({
-            where: { userName : req.params.username}
-        });
-
-        if (response){
-            return res.status(200).json("Usuario excluido com sucesso!")
-        } else{
-            return res.status(400).json("Falha na exclusao do Usuario!")
-        }
+    if (response) {
+      return res.status(200).json('Usuario excluido com sucesso!');
     }
+    return res.status(400).json('Falha na exclusao do Usuario!');
+  }
 }
 
 export default new UsersController();

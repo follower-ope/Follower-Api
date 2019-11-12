@@ -4,9 +4,11 @@ class User extends Model {
   static init(sequelize) {
     super.init(
       {
-        userName: Sequelize.STRING,
+        username: Sequelize.STRING,
         name: Sequelize.STRING,
-        role: Sequelize.STRING
+        email: Sequelize.STRING,
+        password_hash: Sequelize.STRING,
+        disabled_at: Sequelize.DATE,
       },
       {
         sequelize,
@@ -14,7 +16,14 @@ class User extends Model {
       }
     );
 
+    User.removeAttribute('id');
+
     return this;
+  }
+
+  static associate(models) {
+    this.belongsTo(models.Projects, { foreignKey: 'project_id' });
+    this.belongsTo(models.Profile, { foreignKey: 'profile_id' });
   }
 }
 

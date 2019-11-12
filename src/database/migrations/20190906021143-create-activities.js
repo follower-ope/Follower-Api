@@ -7,15 +7,24 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      userName: {
+      username: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'users',
+          key: 'username',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
+      softwares_id: {
         type: Sequelize.STRING,
+        references: {
+          model: 'softwares',
+          key: 'process_name',
+        },
         allowNull: false,
       },
-      proccessName: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      horario: {
+      time: {
         type: Sequelize.DATE,
         allowNull: false,
       },

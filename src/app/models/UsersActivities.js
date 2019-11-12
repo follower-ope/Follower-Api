@@ -1,21 +1,18 @@
 import Sequelize, { Model } from 'sequelize';
 
-class Projects extends Model {
+export class UsersActivities extends Model {
   static init(sequelize) {
     super.init(
       {
-        title: Sequelize.STRING,
-        description: Sequelize.STRING,
-        time: Sequelize.INTEGER,
+        userId: Sequelize.INTEGER,
+        startDate: Sequelize.timestamps,
+        finishDate: Sequelize.timestamps,
       },
       {
         sequelize,
         timestamps: false,
       }
     );
-
     return this;
   }
 }
-
-export default Projects;

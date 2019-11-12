@@ -4,9 +4,9 @@ class Activitie extends Model {
   static init(sequelize) {
     super.init(
       {
-        userName: Sequelize.STRING,
-        proccessName: Sequelize.STRING,
-        horario: Sequelize.DATE,
+        username: Sequelize.STRING,
+        softwares_id: Sequelize.STRING,
+        time: Sequelize.DATE,
       },
       {
         sequelize,
@@ -15,6 +15,10 @@ class Activitie extends Model {
     );
 
     return this;
+  }
+
+  static associate(models) {
+    this.hasOne(models.Softwares, { foreignKey: 'process_name' });
   }
 }
 

@@ -16,12 +16,21 @@ class ProjectsController {
   }
 
   async store(req, res) {
-    const { name, time } = req.body;
+    const { title } = req.body;
 
-    const project = await Projects.create({
-      name,
-      time,
+    const projectExists = await Projects.findOne({
+      where: {
+        title,
+      },
     });
+
+    if (projectExists) {
+      return res
+        .status(400)
+        .json({ error: `Project ${projectExists.title} already exists` });
+    }
+
+    const project = await Projects.create(req.body);
 
     return res.json(project);
   }
