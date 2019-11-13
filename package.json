@@ -7,13 +7,9 @@
     "dev": "yarn sequelize db:migrate && nodemon src/server.js"
   },
   "dependencies": {
-    "bcrypt": "^3.0.6",
-    "cors": "^2.8.5",
     "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
     "sequelize": "^5.18.1",
-    "sqlite3": "^4.1.0",
-    "yup": "^0.27.0"
+    "sqlite3": "^4.1.0"
   },
   "devDependencies": {
     "eslint": "^6.3.0",
