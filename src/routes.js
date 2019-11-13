@@ -23,6 +23,7 @@ routes.delete('/projects/:id', ProjectsController.delete);
 
 routes.get('/users/:username', UsersController.show);
 routes.get('/users', UsersController.index);
+routes.get('/usersIncomplete', UsersController.indexIncomplete);
 routes.post('/users', UsersController.store);
 routes.put('/users/:username', UsersController.update);
 routes.delete('/users/:username', UsersController.delete);

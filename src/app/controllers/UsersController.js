@@ -8,6 +8,16 @@ class UsersController {
     return res.json(users);
   }
 
+  async indexIncomplete(req, res) {
+    try {
+      const users = await User.findAll({ where: { name: null } });
+
+      return res.json(users);
+    } catch (err) {
+      return res.status(500).json({ message: 'Unable to get users' });
+    }
+  }
+
   async show(req, res) {
     const { username } = req.params;
 
@@ -29,9 +39,13 @@ class UsersController {
       return res.status(400).json({ error: 'User already exists' });
     }
 
-    const user = await User.create(req.body);
+    try {
+      const user = await User.create(req.body);
 
-    return res.json(user);
+      return res.json(user);
+    } catch (err) {
+      return res.status(500).json({ message: 'Unable to get users' });
+    }
   }
 
   async update(req, res) {
