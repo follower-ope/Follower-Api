@@ -5,8 +5,11 @@ import ProjectsController from './app/controllers/ProjectController';
 import UsersController from './app/controllers/UsersController';
 import UsersActivitiesController from './app/controllers/UsersActivitiesController';
 import SoftwaresController from './app/controllers/SoftwaresController';
+import AuthController from './app/controllers/AuthController';
 
 const routes = new Router();
+
+routes.post('/session', AuthController.store);
 
 routes.get('/activities/:username', ActivitiesController.show);
 routes.get('/activities', ActivitiesController.index);

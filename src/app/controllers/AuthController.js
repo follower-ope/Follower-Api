@@ -33,15 +33,15 @@ class AuthController {
         .json({ error: 'email or passowrd does not match' });
     }
 
-    const { id, name } = user;
+    const { username, name } = user;
 
     return res.json({
       user: {
-        id,
+        username,
         name,
         email,
       },
-      token: jwt.sign({ id }, authConfig.Secret, {
+      token: jwt.sign({ username }, authConfig.Secret, {
         expiresIn: authConfig.expiresIn,
       }),
     });
