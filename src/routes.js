@@ -7,13 +7,20 @@ import UsersActivitiesController from './app/controllers/UsersActivitiesControll
 import SoftwaresController from './app/controllers/SoftwaresController';
 import AuthController from './app/controllers/AuthController';
 
+import authMiddleware from './app/middlewares/auth';
+
 const routes = new Router();
 
 routes.post('/session', AuthController.store);
 
+routes.post('/activities', ActivitiesController.store);
+
+routes.post('/users', UsersController.store);
+
+routes.use(authMiddleware);
+
 routes.get('/activities', ActivitiesController.index);
 routes.get('/activities/:username', ActivitiesController.show);
-routes.post('/activities', ActivitiesController.store);
 routes.put('/activities/:username', ActivitiesController.updateProjectByRange);
 
 routes.get('/projects', ProjectsController.index);
@@ -25,7 +32,6 @@ routes.delete('/projects/:id', ProjectsController.delete);
 routes.get('/users/:username', UsersController.show);
 routes.get('/users', UsersController.index);
 routes.get('/usersIncomplete', UsersController.indexIncomplete);
-routes.post('/users', UsersController.store);
 routes.put('/users/:username', UsersController.update);
 routes.delete('/users/:username', UsersController.delete);
 

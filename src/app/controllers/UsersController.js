@@ -31,14 +31,20 @@ class UsersController {
   }
 
   async store(req, res) {
-    const { username } = req.body;
+    const { username, email } = req.body;
 
-    const userExist = await User.findOne({
+    const userExists = await User.findOne({
       where: { username },
     });
 
-    if (userExist) {
+    if (userExists) {
       return res.status(400).json({ error: 'User already exists' });
+    }
+
+    const emailUsed = await User.findOne({ where: { email } });
+
+    if (emailUsed) {
+      return res.status(400).json({ message: 'Email already used' });
     }
 
     try {
@@ -64,7 +70,7 @@ class UsersController {
       const userExists = await User.findOne({ where: { email } });
 
       if (userExists) {
-        return res.status(400).json({ message: 'Email is already in use' });
+        return res.status(400).json({ message: 'Email already used' });
       }
     }
 

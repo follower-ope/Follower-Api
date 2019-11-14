@@ -14,7 +14,7 @@ class AuthController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'validation fail' });
+      return res.status(400).json({ error: 'Validation fail' });
     }
 
     const { email, password } = req.body;
@@ -24,13 +24,13 @@ class AuthController {
     if (!user) {
       return res
         .status(401)
-        .json({ error: 'email or password does not match' });
+        .json({ error: 'Email or password does not match' });
     }
 
     if (!(await user.checkPassword(password))) {
       return res
         .status(401)
-        .json({ error: 'email or passowrd does not match' });
+        .json({ error: 'Email or passowrd does not match' });
     }
 
     const { username, name } = user;
@@ -41,7 +41,7 @@ class AuthController {
         name,
         email,
       },
-      token: jwt.sign({ username }, authConfig.Secret, {
+      token: jwt.sign({ username }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,
       }),
     });
