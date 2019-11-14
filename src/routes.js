@@ -11,9 +11,10 @@ const routes = new Router();
 
 routes.post('/session', AuthController.store);
 
-routes.get('/activities/:username', ActivitiesController.show);
 routes.get('/activities', ActivitiesController.index);
+routes.get('/activities/:username', ActivitiesController.show);
 routes.post('/activities', ActivitiesController.store);
+routes.put('/activities/:username', ActivitiesController.updateProjectByRange);
 
 routes.get('/projects', ProjectsController.index);
 routes.get('/projects/:id', ProjectsController.show);

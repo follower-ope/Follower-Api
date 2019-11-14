@@ -19,6 +19,7 @@ class Activitie extends Model {
 
   static associate(models) {
     this.hasOne(models.Softwares, { foreignKey: 'process_name' });
+    this.belongsTo(models.Projects, { foreignKey: 'project_id' });
   }
 }
 

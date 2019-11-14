@@ -1,5 +1,7 @@
 import User from '../models/User';
 import Activitie from '../models/Activitie';
+import Projects from '../models/Projects';
+import Profile from '../models/Profile';
 
 class UsersController {
   async index(req, res) {
@@ -49,26 +51,53 @@ class UsersController {
   }
 
   async update(req, res) {
-    const user = await User.findAll({
-      where: { userName: req.params.username },
-    });
+    const { username } = req.params;
+    const { name, email, project_id, profile_id } = req.body;
 
-    if (user.length === 0) {
-      return res.status(400).json('Usuario nao encontrado na base de dados!');
+    const user = await User.findOne({ where: { username } });
+
+    if (!user) {
+      return res.status(400).json({ message: 'User does not exists' });
     }
 
-    const response = await User.update(
-      {
-        name: req.body.name,
-        role: req.body.role,
-      },
-      { where: { userName: req.params.username } }
-    );
+    if (email && email !== user.email) {
+      const userExists = await User.findOne({ where: { email } });
 
-    if (response) {
-      return res.status(200).json('Usuario alterado com sucesso!');
+      if (userExists) {
+        return res.status(400).json({ message: 'Email is already in use' });
+      }
     }
-    return res.status(400).json('Falha na alteracao do Usuario!');
+
+    if (profile_id && profile_id !== user.profile_id) {
+      const profileExists = await Profile.findByPk(profile_id);
+
+      if (!profileExists) {
+        return res.status(400).json({ message: 'Profile does not exists' });
+      }
+    }
+
+    if (project_id && project_id !== user.project_id) {
+      const projectExists = await Projects.findByPk(project_id);
+
+      if (!projectExists) {
+        return res.status(400).json({ message: 'Project does not exists' });
+      }
+    }
+
+    try {
+      await User.update(
+        {
+          name,
+          email,
+          project_id,
+          profile_id,
+        },
+        { where: { username } }
+      );
+      return res.json({ username, name, email, profile_id, project_id });
+    } catch (err) {
+      return res.status(500).json({ message: 'Unable to update user' });
+    }
   }
 
   async delete(req, res) {

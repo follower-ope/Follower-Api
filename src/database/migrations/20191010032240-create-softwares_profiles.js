@@ -7,14 +7,14 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      isProductive: {
+      is_productive: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
       },
-      profileId: {
+      profile_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'users',
+          model: 'profiles',
           key: 'id',
         },
         allowNull: false,
@@ -23,6 +23,6 @@ module.exports = {
   },
 
   down: queryInterface => {
-    return queryInterface.dropTable('projects');
+    return queryInterface.dropTable('softwares_profiles');
   },
 };

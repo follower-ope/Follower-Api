@@ -10,6 +10,6 @@ module.exports = {
   },
 
   down: queryInterface => {
-    return queryInterface.dropTable('project_id');
+    return queryInterface.removeColumn('users', 'project_id');
   },
 };
