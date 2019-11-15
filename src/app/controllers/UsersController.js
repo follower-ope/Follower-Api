@@ -1,3 +1,4 @@
+import * as Yup from 'yup';
 import User from '../models/User';
 import Activitie from '../models/Activitie';
 import Projects from '../models/Projects';
@@ -31,6 +32,17 @@ class UsersController {
   }
 
   async store(req, res) {
+    const schema = Yup.object().shape({
+      username: Yup.string().required(),
+      email: Yup.string()
+        .email()
+        .required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'validation fail ' });
+    }
+
     const { username, email } = req.body;
 
     const userExists = await User.findOne({
