@@ -8,6 +8,7 @@ import SoftwaresController from './app/controllers/SoftwaresController';
 import AuthController from './app/controllers/AuthController';
 
 import authMiddleware from './app/middlewares/auth';
+import ProfilesController from './app/controllers/ProfilesController';
 
 const routes = new Router();
 
@@ -38,5 +39,11 @@ routes.delete('/users/:username', UsersController.delete);
 routes.get('/softwares', SoftwaresController.index);
 
 routes.get('/usersActivities', UsersActivitiesController.index);
+
+routes.get('/profile/:id', ProfilesController.show);
+routes.get('/profile', ProfilesController.index);
+routes.post('/profile', ProfilesController.store);
+routes.put('/profile/:id', ProfilesController.update);
+routes.delete('/profile/:id', ProfilesController.delete);
 
 export default routes;
