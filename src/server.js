@@ -1,6 +1,6 @@
 import app from './app';
-import ProfileController from './app/controllers/ProfilesController';
+import ProfilesController from './app/controllers/ProfilesController';
 
 app.listen(3333, () => {
-  ProfileController.store('administrador');
+  //ProfilesController.store('administrador');
 });
