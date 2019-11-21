@@ -5,10 +5,11 @@ import Projects from '../app/models/Projects';
 import User from '../app/models/User';
 import Profiles from '../app/models/Profile';
 import Softwares from '../app/models/Softwares';
+import ProfilesSoftwares from '../app/models/ProfilesSoftwares';
 
 import databaseConfig from '../config/database';
 
-const models = [Activitie, Projects, User, Profiles, Softwares];
+const models = [Activitie, Projects, User, Profiles, Softwares, ProfilesSoftwares];
 
 class Database {
   constructor() {

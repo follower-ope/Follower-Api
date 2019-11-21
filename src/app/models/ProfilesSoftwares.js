@@ -1,12 +1,12 @@
 import Sequelize, { Model } from 'sequelize';
 
-class ProfilesSoftwares extends Model {
+class softwares_profiles extends Model {
   static init(sequelize) {
     super.init(
       {
-        profileId: Sequelize.INTEGER,
+        profile_id: Sequelize.INTEGER,
         process_name: Sequelize.STRING,
-        isProductive: Sequelize.BOOLEAN
+        is_productive: Sequelize.BOOLEAN
       },
       {
         sequelize,
@@ -18,9 +18,9 @@ class ProfilesSoftwares extends Model {
   }
 
   static associate(models) {
-    this.hasOne(models.Softwares, { foreignKey: 'process_name' });
-    this.belongsTo(models.Profile, { foreignKey: 'profile_id' });
+    this.hasOne(models.Softwares, { foreignKey: 'process_name'});
+    this.belongsTo(models.Profile, { foreignKey: 'profile_id'});
   }
 }
 
-export default ProfilesSoftwares;
+export default softwares_profiles;

@@ -7,102 +7,126 @@ class ProfilesSoftwaresController {
     //profileId: Sequelize.INTEGER,
     //process_name: Sequelize.STRING,
     //isProductive: Sequelize.BOOLEAN
+    //this.hasOne(models.Softwares, { foreignKey: 'process_name' });
+    //this.belongsTo(models.Profile, { foreignKey: 'profile_id' });
 
     console.log(req.body.profileId)
     console.log(req.body.process_name)
-    console.log(req.body.isProductive)
+    console.log(req.body.is_productive)
 
-    const { profileId, process_name} = req.body;
+    //const { profileId, process_name} = req.body;
 
     const profileExists = await Profile.findOne({
         where: {
-            id: profileId,
+            id: req.body.profileId,
         },
     });
   
     if (!profileExists) {
     return res
         .status(400)
-        .json({ error: `Profile '${profileId}' does not exists.`});
+        .json({ error: `Profile '${req.body.profileId}' does not exists.`});
     }
     
     //console.log("profile ok")
     const softwareExists = await Softwares.findOne({
         where: {
-            process_name,
+            process_name: req.body.process_name,
         },
     });
 
     if (!softwareExists) {
     return res
         .status(400)
-        .json({ error: `Software '${process_name}' does not exists.`});
+        .json({ error: `Software '${req.body.process_name}' does not exists.`});
     }
-    //console.log("software ok")
 
     const profilesSoftwaresExists = await ProfilesSoftwares.findOne({
       where: {
-        profileId
+        profile_id: req.body.profileId,
+        process_name: req.body.process_name
       },
     });
 
-    console.log("erro pós query")
     if (profilesSoftwaresExists) {
         return res
             .status(400)
-            .json({ error: `Profile: ${profilesSoftwaresExists.profileId} Software: ${profilesSoftwaresExists.process_name}
-            already exists.`});
+            .json({ error: `Profile: ${profilesSoftwaresExists.profile_id} Software: ${profilesSoftwaresExists.process_name} already exists.`});
     }
 
-    const profileSoftware = await ProfilesSoftwares.create(req.body);
+    const profileSoftware = await ProfilesSoftwares.create({
+        process_name: req.body.process_name,
+        profile_id: req.body.profile_id,
+        is_productive: req.body.is_productive
+      });
 
     return res.json(profileSoftware);
   }
-/*
-  async index(req, res) {
-    const profiles = await Profile.findAll();
 
-    return res.json(profiles);
+  async index(req, res) {
+    const profilesSoftware = await ProfilesSoftwares.findAll();
+
+    return res.json(profilesSoftware);
   }
 
-  async show(req, res) {
-    const { id } = req.params;
+  async indexProfile(req, res) {
+    const profilesSoftware = await ProfilesSoftwares.findAll({
+        where: {
+            profile_id: req.params.profileId,
+        },
+    });
 
-    const profile = await Profile.findOne({ where: { id } });
+    return res.json(profilesSoftware);
+  }
 
-    if (!profile) {
+  /*async show(req, res) {
+    const { softwareProfileId } = req.params;
+
+    const profilesSoftware = await ProfilesSoftwares.findOne({ where: { softwareProfileId } });
+
+    if (!profilesSoftware) {
       return res
         .status(400)
-        .json({ error: 'Profile does not exists.'});
+        .json({ error: 'Software Profile does not exists.'});
     }
 
     return res.json(profile);
-  }
+  }*/
 
   async update(req, res) {
-    const { id } = req.params;
 
-    const profile = await Profile.findByPk(id);
+    console.log(req.params.id)
 
-    if (!profile) {
-      return res.status(400).json({ error: 'Profile not found' });
+    const profilesSoftware = await ProfilesSoftwares.findOne({
+        where: {
+            id: req.params.id,
+        },
+    });
+
+    if (!profilesSoftware) {
+      return res.status(400).json({ error: 'Profile Software not found' });
     }
 
-    const { description } = await profile.update(req.body);
+    const profileSoftware = await profilesSoftware.update(req.body);
 
-    return res.json({ id, description });
+    return res.json({
+        id: req.params.id, 
+        profile_id: profilesSoftware.profile_id, 
+        process_name: profileSoftware.process_name,
+        is_productive: profileSoftware.is_productive
+    });
   }
 
   async delete(req, res) {
     const { id } = req.params;
 
-    const dbResponse = await Profile.destroy({ where: { id } });
+    const dbResponse = await ProfilesSoftwares.destroy({ where: { id } });
 
     if (!dbResponse) {
       return res.status(400).json({ error: 'Delete error' });
     }
     return res.json({ ok: true });
-  }*/
+  }
 }
 
 export default new ProfilesSoftwaresController();
