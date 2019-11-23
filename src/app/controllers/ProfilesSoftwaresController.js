@@ -4,17 +4,6 @@ import Softwares from '../models/Softwares';
 
 class ProfilesSoftwaresController {
   async store(req, res) {
-    //profileId: Sequelize.INTEGER,
-    //process_name: Sequelize.STRING,
-    //isProductive: Sequelize.BOOLEAN
-    //this.hasOne(models.Softwares, { foreignKey: 'process_name' });
-    //this.belongsTo(models.Profile, { foreignKey: 'profile_id' });
-
-    console.log(req.body.profileId)
-    console.log(req.body.process_name)
-    console.log(req.body.is_productive)
-
-    //const { profileId, process_name} = req.body;
 
     const profileExists = await Profile.findOne({
         where: {
@@ -27,8 +16,7 @@ class ProfilesSoftwaresController {
         .status(400)
         .json({ error: `Profile '${req.body.profileId}' does not exists.`});
     }
-    
-    //console.log("profile ok")
+
     const softwareExists = await Softwares.findOne({
         where: {
             process_name: req.body.process_name,
@@ -79,23 +67,7 @@ class ProfilesSoftwaresController {
     return res.json(profilesSoftware);
   }
 
-  /*async show(req, res) {
-    const { softwareProfileId } = req.params;
-
-    const profilesSoftware = await ProfilesSoftwares.findOne({ where: { softwareProfileId } });
-
-    if (!profilesSoftware) {
-      return res
-        .status(400)
-        .json({ error: 'Software Profile does not exists.'});
-    }
-
-    return res.json(profile);
-  }*/
-
   async update(req, res) {
-
-    console.log(req.params.id)
 
     const profilesSoftware = await ProfilesSoftwares.findOne({
         where: {
