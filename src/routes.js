@@ -47,11 +47,14 @@ routes.post('/profile', ProfilesController.store);
 routes.put('/profile/:id', ProfilesController.update);
 routes.delete('/profile/:id', ProfilesController.delete);
 
-routes.post('/profilesSoftwares', ProfilesSoftwaresController.store)
-routes.get('/profilesSoftwares', ProfilesSoftwaresController.index)
-routes.get('/profilesSoftwares/:profileId', ProfilesSoftwaresController.indexProfile)
+routes.post('/profilesSoftwares', ProfilesSoftwaresController.store);
+routes.get('/profilesSoftwares', ProfilesSoftwaresController.index);
+routes.get(
+  '/profilesSoftwares/:profileId',
+  ProfilesSoftwaresController.indexProfile
+);
 routes.put('/profilesSoftwares/:id', ProfilesSoftwaresController.update);
 routes.delete('/profilesSoftwares/:id', ProfilesSoftwaresController.delete);
-//routes.get('/profilesSoftwares/:softwareProfileId', ProfilesSoftwaresController.show)
+// routes.get('/profilesSoftwares/:softwareProfileId', ProfilesSoftwaresController.show)
 
 export default routes;
