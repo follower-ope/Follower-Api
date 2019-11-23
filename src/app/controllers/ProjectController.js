@@ -1,4 +1,5 @@
 import Projects from '../models/Projects';
+import User from '../models/User';
 
 class ProjectsController {
   async index(req, res) {
@@ -58,6 +59,32 @@ class ProjectsController {
       return res.status(400).json({ error: 'Delete error' });
     }
     return res.json({ ok: true });
+  }
+
+  async indexUsers(req, res) {
+
+    const project_id = req.params.id
+
+    const project = await Projects.findByPk(project_id);
+
+    if (!project) {
+      return res.status(400).json({ error: 'Project not found' });
+    }
+
+    const usersByProject = await User.findAll({
+      attributes: ['username', 'name', 'email', 'project_id', 'profile_id', 'disabled_at'],
+      where: {
+        project_id: project_id
+      }
+    });
+
+    if (!usersByProject) {
+      return res
+        .status(400)
+        .json({error: `There are no users for project ${project.title}.`});
+    }
+
+    return res.json(usersByProject);
   }
 }
 

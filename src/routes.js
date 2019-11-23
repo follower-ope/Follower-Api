@@ -31,6 +31,8 @@ routes.post('/projects', ProjectsController.store);
 routes.put('/projects/:id', ProjectsController.update);
 routes.delete('/projects/:id', ProjectsController.delete);
 
+routes.get('/projectUsers/:id', ProjectsController.indexUsers);
+
 routes.get('/users/:username', UsersController.show);
 routes.get('/users', UsersController.index);
 routes.get('/usersIncomplete', UsersController.indexIncomplete);
@@ -49,12 +51,8 @@ routes.delete('/profile/:id', ProfilesController.delete);
 
 routes.post('/profilesSoftwares', ProfilesSoftwaresController.store);
 routes.get('/profilesSoftwares', ProfilesSoftwaresController.index);
-routes.get(
-  '/profilesSoftwares/:profileId',
-  ProfilesSoftwaresController.indexProfile
-);
+routes.get('/profilesSoftwares/:profileId', ProfilesSoftwaresController.indexProfile);
 routes.put('/profilesSoftwares/:id', ProfilesSoftwaresController.update);
 routes.delete('/profilesSoftwares/:id', ProfilesSoftwaresController.delete);
-// routes.get('/profilesSoftwares/:softwareProfileId', ProfilesSoftwaresController.show)
 
 export default routes;
