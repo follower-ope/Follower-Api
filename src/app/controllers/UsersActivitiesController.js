@@ -1,42 +1,31 @@
-import UsersActivities from '../models/UsersActivities';
 import Sequelize from '../../config/sequelize';
 
 class UsersActivitiesController {
   async index(req, res) {
 
-    console.log(req.params)
-    //console.log(res)
+    console.log(req.body)
 
     const usersActivities = await Sequelize.query(
-      "SELECT userId, "+
-      "(SELECT timestamp " +
+      "SELECT username, "+
+      "(SELECT time " +
       " FROM activities " +
-      " WHERE DATE(timestamp) = DATE " +
-      " ORDER BY timestamp ASC " +
+      " WHERE DATE(time) = DATE " +
+      " ORDER BY time ASC " +
       "LIMIT 1) AS startDate, " +
-      "(SELECT timestamp " +
+      "(SELECT time " +
       "  FROM activities " +
-      "  WHERE DATE(timestamp) = DATE " +
-      "  ORDER BY timestamp DESC " +
+      "  WHERE DATE(time) = DATE " +
+      "  ORDER BY time DESC " +
       "  LIMIT 1) AS finishDate " +
-      "FROM (SELECT DISTINCT DATE(timestamp) AS DATE, userId " +
+      "FROM (SELECT DISTINCT DATE(time) AS DATE, username " +
       "    FROM activities " +
       "WHERE " +
-      "   date >= '2019-10-20' " +
-      "   and date <= '2019-10-23')",{
-      //replacements: {startDate: req.body.startDate, endDate: req.body.endDate},
-      model: Sequelize.UsersActivities,
-      mapToModel: true
-      //type: Sequelize.QueryTypes.SELECT
-    });
-
-    console.log(usersActivities)
+      "   date >= '" + req.body.startDate + "' " +
+      "   and date <= '" + req.body.endDate + "')");
 
     const data = {
       usersActivities: usersActivities
     };
-
-    console.log(data)
 
     return res.status(200).json(data)
   }
