@@ -19,6 +19,8 @@ routes.post('/activities', ActivitiesController.store);
 
 routes.post('/users', UsersController.store);
 
+routes.post('/profile', ProfilesController.store);
+
 routes.use(authMiddleware);
 
 routes.get('/activities', ActivitiesController.index);
@@ -45,13 +47,15 @@ routes.get('/usersActivities', UsersActivitiesController.index);
 
 routes.get('/profile/:id', ProfilesController.show);
 routes.get('/profile', ProfilesController.index);
-routes.post('/profile', ProfilesController.store);
 routes.put('/profile/:id', ProfilesController.update);
 routes.delete('/profile/:id', ProfilesController.delete);
 
 routes.post('/profilesSoftwares', ProfilesSoftwaresController.store);
 routes.get('/profilesSoftwares', ProfilesSoftwaresController.index);
-routes.get('/profilesSoftwares/:profileId', ProfilesSoftwaresController.indexProfile);
+routes.get(
+  '/profilesSoftwares/:profileId',
+  ProfilesSoftwaresController.indexProfile
+);
 routes.put('/profilesSoftwares/:id', ProfilesSoftwaresController.update);
 routes.delete('/profilesSoftwares/:id', ProfilesSoftwaresController.delete);
 
