@@ -21,11 +21,7 @@ class UsersActivitiesController {
         `   and date <= '${req.body.endDate}')`
     );
 
-    const data = {
-      usersActivities,
-    };
-
-    return res.status(200).json(data);
+    return res.status(200).json(usersActivities[0]);
   }
 }
 
