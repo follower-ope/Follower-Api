@@ -62,8 +62,7 @@ class ProjectsController {
   }
 
   async indexUsers(req, res) {
-
-    const project_id = req.params.id
+    const project_id = req.params.id;
 
     const project = await Projects.findByPk(project_id);
 
@@ -72,16 +71,23 @@ class ProjectsController {
     }
 
     const usersByProject = await User.findAll({
-      attributes: ['username', 'name', 'email', 'project_id', 'profile_id', 'disabled_at'],
+      attributes: [
+        'username',
+        'name',
+        'email',
+        'project_id',
+        'profile_id',
+        'disabled_at',
+      ],
       where: {
-        project_id: project_id
-      }
+        project_id,
+      },
     });
 
     if (!usersByProject) {
       return res
         .status(400)
-        .json({error: `There are no users for project ${project.title}.`});
+        .json({ error: `There are no users for project ${project.title}.` });
     }
 
     return res.json(usersByProject);

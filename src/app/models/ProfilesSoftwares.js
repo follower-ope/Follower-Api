@@ -6,7 +6,7 @@ class softwares_profiles extends Model {
       {
         profile_id: Sequelize.INTEGER,
         process_name: Sequelize.STRING,
-        is_productive: Sequelize.BOOLEAN
+        is_productive: Sequelize.BOOLEAN,
       },
       {
         sequelize,
@@ -18,8 +18,8 @@ class softwares_profiles extends Model {
   }
 
   static associate(models) {
-    this.hasOne(models.Softwares, { foreignKey: 'process_name'});
-    this.belongsTo(models.Profile, { foreignKey: 'profile_id'});
+    this.hasOne(models.Softwares, { foreignKey: 'process_name' });
+    this.belongsTo(models.Profile, { foreignKey: 'profile_id' });
   }
 }
 

@@ -1,52 +1,52 @@
 import ProfilesSoftwares from '../models/ProfilesSoftwares';
 import Profile from '../models/Profile';
-import Softwares from '../models/Softwares'; 
+import Softwares from '../models/Softwares';
 
 class ProfilesSoftwaresController {
   async store(req, res) {
-
     const profileExists = await Profile.findOne({
-        where: {
-            id: req.body.profileId,
-        },
+      where: {
+        id: req.body.profileId,
+      },
     });
-  
+
     if (!profileExists) {
-    return res
+      return res
         .status(400)
-        .json({ error: `Profile '${req.body.profileId}' does not exists.`});
+        .json({ error: `Profile '${req.body.profileId}' does not exists.` });
     }
 
     const softwareExists = await Softwares.findOne({
-        where: {
-            process_name: req.body.process_name,
-        },
+      where: {
+        process_name: req.body.process_name,
+      },
     });
 
     if (!softwareExists) {
-    return res
-        .status(400)
-        .json({ error: `Software '${req.body.process_name}' does not exists.`});
+      return res.status(400).json({
+        error: `Software '${req.body.process_name}' does not exists.`,
+      });
     }
 
     const profilesSoftwaresExists = await ProfilesSoftwares.findOne({
       where: {
         profile_id: req.body.profileId,
-        process_name: req.body.process_name
+        process_name: req.body.process_name,
       },
     });
 
     if (profilesSoftwaresExists) {
-        return res
-            .status(400)
-            .json({ error: `Profile: ${profilesSoftwaresExists.profile_id} Software: ${profilesSoftwaresExists.process_name} already exists.`});
+      return res.status(400).json({
+        error: `Profile: ${profilesSoftwaresExists.profile_id}
+          Software: ${profilesSoftwaresExists.process_name} already exists.`,
+      });
     }
 
     const profileSoftware = await ProfilesSoftwares.create({
-        process_name: req.body.process_name,
-        profile_id: req.body.profile_id,
-        is_productive: req.body.is_productive
-      });
+      process_name: req.body.process_name,
+      profile_id: req.body.profile_id,
+      is_productive: req.body.is_productive,
+    });
 
     return res.json(profileSoftware);
   }
@@ -59,20 +59,19 @@ class ProfilesSoftwaresController {
 
   async indexProfile(req, res) {
     const profilesSoftware = await ProfilesSoftwares.findAll({
-        where: {
-            profile_id: req.params.profileId,
-        },
+      where: {
+        profile_id: req.params.profileId,
+      },
     });
 
     return res.json(profilesSoftware);
   }
 
   async update(req, res) {
-
     const profilesSoftware = await ProfilesSoftwares.findOne({
-        where: {
-            id: req.params.id,
-        },
+      where: {
+        id: req.params.id,
+      },
     });
 
     if (!profilesSoftware) {
@@ -82,10 +81,10 @@ class ProfilesSoftwaresController {
     const profileSoftware = await profilesSoftware.update(req.body);
 
     return res.json({
-        id: req.params.id, 
-        profile_id: profilesSoftware.profile_id, 
-        process_name: profileSoftware.process_name,
-        is_productive: profileSoftware.is_productive
+      id: req.params.id,
+      profile_id: profilesSoftware.profile_id,
+      process_name: profileSoftware.process_name,
+      is_productive: profileSoftware.is_productive,
     });
   }
 

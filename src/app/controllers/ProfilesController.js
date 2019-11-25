@@ -11,25 +11,15 @@ class ProfilesController {
     });
 
     if (profileExists) {
-      return res
-        .status(400)
-        .json({ error: `Profile '${profileExists.description}' already exists.`});
+      return res.status(400).json({
+        error: `Profile '${profileExists.description}' already exists.`,
+      });
     }
 
     const profile = await Profile.create(req.body);
 
     return res.json(profile);
   }
-  /*async store(description) {
-    await Profile.findOrCreate({
-      where: {
-        description,
-      },
-      defaults: {
-        description,
-      },
-    });
-  }*/
 
   async index(req, res) {
     const profiles = await Profile.findAll();
@@ -43,9 +33,7 @@ class ProfilesController {
     const profile = await Profile.findOne({ where: { id } });
 
     if (!profile) {
-      return res
-        .status(400)
-        .json({ error: 'Profile does not exists.'});
+      return res.status(400).json({ error: 'Profile does not exists.' });
     }
 
     return res.json(profile);
