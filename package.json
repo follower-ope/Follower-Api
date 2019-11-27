@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "build": "sucrase ./src -d ./deploy --transforms imports",
     "dev": "yarn sequelize db:migrate && nodemon src/server.js"
   },
   "dependencies": {
