@@ -33,6 +33,8 @@ class UsersController {
 
     const user = await User.findAll({
       where: { username },
+      attributes: ['username', 'name', 'email', 'disabled_at'],
+      include: [Projects, Profile],
     });
 
     return res.json(user);
@@ -69,7 +71,9 @@ class UsersController {
     try {
       const user = await User.create(req.body);
 
-      return res.json(user);
+      const { name } = user;
+
+      return res.json({ username, name, email });
     } catch (err) {
       return res.status(500).json({ message: 'Unable to get users' });
     }
