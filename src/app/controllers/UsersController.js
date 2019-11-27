@@ -31,11 +31,15 @@ class UsersController {
   async show(req, res) {
     const { username } = req.params;
 
-    const user = await User.findAll({
+    const user = await User.findOne({
       where: { username },
       attributes: ['username', 'name', 'email', 'disabled_at'],
       include: [Projects, Profile],
     });
+
+    if (!user) {
+      return res.status(400).json({ message: 'User does not exists' });
+    }
 
     return res.json(user);
   }
@@ -49,7 +53,7 @@ class UsersController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'validation fail ' });
+      return res.status(400).json({ error: 'Validation fail' });
     }
 
     const { username, email } = req.body;
