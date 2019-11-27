@@ -74,7 +74,7 @@ class UsersController {
       const { name } = user;
 
       return res.json({ username, name, email });
-    } catch (err) {
+    } catch (error) {
       return res.status(500).json({ message: 'Unable to get users' });
     }
   }
@@ -130,34 +130,27 @@ class UsersController {
   }
 
   async delete(req, res) {
-    const activities = await Activitie.findAll({
-      where: { userName: req.params.username },
-    });
+    const { username } = req.params;
 
-    if (activities.length > 0) {
-      return res
-        .status(400)
-        .json(
-          'Nao eh possivel excluir um Usuario que possua atividades vinculadas no sistema!'
-        );
+    try {
+      const user = await User.findOne({
+        where: { username },
+      });
+
+      if (!user) {
+        return res.status(400).json({ message: 'User does not exists!' });
+      }
+
+      const disabled_at = Date.now();
+
+      await user.update({
+        disabled_at,
+      });
+
+      return res.status(200).json({ message: 'User deleted' });
+    } catch (err) {
+      return res.status(500).json({ message: 'Unexpected fail', err });
     }
-
-    const user = await User.findAll({
-      where: { userName: req.params.username },
-    });
-
-    if (user.length === 0) {
-      return res.status(400).json('Usuario nao encontrado na base de dados!');
-    }
-
-    const response = await User.destroy({
-      where: { userName: req.params.username },
-    });
-
-    if (response) {
-      return res.status(200).json('Usuario excluido com sucesso!');
-    }
-    return res.status(400).json('Falha na exclusao do Usuario!');
   }
 }
 
