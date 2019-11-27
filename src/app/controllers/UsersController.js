@@ -6,7 +6,10 @@ import Profile from '../models/Profile';
 
 class UsersController {
   async index(req, res) {
-    const users = await User.findAll();
+    const users = await User.findAll({
+      attributes: ['username', 'name', 'email', 'disabled_at'],
+      include: [Projects, Profile],
+    });
 
     return res.json(users);
   }
