@@ -16,7 +16,11 @@ class UsersController {
 
   async indexIncomplete(req, res) {
     try {
-      const users = await User.findAll({ where: { name: null } });
+      const users = await User.findAll({
+        where: { name: null },
+        attributes: ['username', 'name', 'email', 'disabled_at'],
+        include: [Projects, Profile],
+      });
 
       return res.json(users);
     } catch (err) {
