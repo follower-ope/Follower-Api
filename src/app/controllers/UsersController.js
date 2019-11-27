@@ -1,12 +1,12 @@
 import * as Yup from 'yup';
 import User from '../models/User';
-import Activitie from '../models/Activitie';
 import Projects from '../models/Projects';
 import Profile from '../models/Profile';
 
 class UsersController {
   async index(req, res) {
     const users = await User.findAll({
+      where: { disabled_at: null },
       attributes: ['username', 'name', 'email', 'disabled_at'],
       include: [Projects, Profile],
     });
