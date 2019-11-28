@@ -1,5 +1,6 @@
 import Projects from '../models/Projects';
 import User from '../models/User';
+import Profile from '../models/Profile';
 
 class ProjectsController {
   async index(req, res) {
@@ -79,6 +80,7 @@ class ProjectsController {
         'profile_id',
         'disabled_at',
       ],
+      include: [Projects, Profile],
       where: {
         project_id,
       },
