@@ -16,3 +16,6 @@ follower.sqlite
 
 # vscode
 .vscode
+
+# deploy folder
+deploy
