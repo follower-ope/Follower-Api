@@ -10,6 +10,7 @@ import AuthController from './app/controllers/AuthController';
 import authMiddleware from './app/middlewares/auth';
 import ProfilesController from './app/controllers/ProfilesController';
 import ProfilesSoftwaresController from './app/controllers/ProfilesSoftwaresController';
+import userProductivity from './app/controllers/UsersProductivityController';
 
 const routes = new Router();
 
@@ -58,5 +59,7 @@ routes.get(
 );
 routes.put('/profilesSoftwares/:id', ProfilesSoftwaresController.update);
 routes.delete('/profilesSoftwares/:id', ProfilesSoftwaresController.delete);
+
+routes.get('/userProductivity', userProductivity.index)
 
 export default routes;
