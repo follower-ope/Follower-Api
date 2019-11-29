@@ -17,6 +17,13 @@ module.exports = {
           model: 'profiles',
           key: 'id',
         },
+      },
+      software_id: {
+        type: Sequelize.STRING,
+        references: {
+          model: 'softwares',
+          key: 'process_name',
+        },
         allowNull: false,
       },
     });
