@@ -6,14 +6,14 @@ class ProfilesSoftwaresController {
   async store(req, res) {
     const profileExists = await Profile.findOne({
       where: {
-        id: req.body.profileId,
+        id: req.body.profile_id,
       },
     });
 
     if (!profileExists) {
       return res
         .status(400)
-        .json({ error: `Profile '${req.body.profileId}' does not exists.` });
+        .json({ error: `Profile '${req.body.profile_id}' does not exists.` });
     }
 
     const softwareExists = await Softwares.findOne({
@@ -30,8 +30,8 @@ class ProfilesSoftwaresController {
 
     const profilesSoftwaresExists = await ProfilesSoftwares.findOne({
       where: {
-        profile_id: req.body.profileId,
-        process_name: req.body.process_name,
+        profile_id: req.body.profile_id,
+        software_id: req.body.process_name,
       },
     });
 
@@ -43,7 +43,7 @@ class ProfilesSoftwaresController {
     }
 
     const profileSoftware = await ProfilesSoftwares.create({
-      process_name: req.body.process_name,
+      software_id: req.body.process_name,
       profile_id: req.body.profile_id,
       is_productive: req.body.is_productive,
     });
