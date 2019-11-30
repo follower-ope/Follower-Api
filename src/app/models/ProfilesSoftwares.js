@@ -5,7 +5,7 @@ class softwares_profiles extends Model {
     super.init(
       {
         profile_id: Sequelize.INTEGER,
-        process_name: Sequelize.STRING,
+        software_id: Sequelize.STRING,
         is_productive: Sequelize.BOOLEAN,
       },
       {
