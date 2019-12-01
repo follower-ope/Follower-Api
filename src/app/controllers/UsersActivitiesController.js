@@ -7,11 +7,13 @@ class UsersActivitiesController {
         '(SELECT time ' +
         ' FROM activities ' +
         ' WHERE DATE(time) = atv.time ' +
+        '   AND username = atv.username' +
         ' ORDER BY time ASC ' +
         'LIMIT 1) AS startDate, ' +
         '(SELECT time ' +
         '  FROM activities ' +
         '  WHERE DATE(time) = atv.time ' +
+        '   AND username = atv.username' +
         '  ORDER BY time DESC ' +
         '  LIMIT 1) AS finishDate ' +
         'FROM (SELECT DISTINCT DATE(time) AS time, username ' +
