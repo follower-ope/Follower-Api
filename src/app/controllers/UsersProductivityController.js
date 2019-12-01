@@ -17,21 +17,20 @@ class UsersActivitiesController {
     //produtividade por usuario
     //De x tempo quantos % foi produtivo
     const UsersActivities = await Sequelize.query(
-      " SELECT  Date(a.time) date, " +
-      "         Time(a.time) time, " +
-      "         a.time timestamp, " +
+      " SELECT  Date(atv.time) date, " +
+      "         atv.time time_stamp, " +
       "         u.username, " +
       "         sp.is_productive " +
-      " FROM activities a " +
+      " FROM activities As atv " +
       " INNER JOIN softwares s ON " +
-      " s.process_name = a.softwares_id " +
+      " s.process_name = atv.softwares_id " +
       " INNER JOIN users u on " +
-      " u.username = a.username " +
-      " INNER JOIN softwares_profiles sp ON " +
-      " sp.process_name = s.process_name AND sp.profile_id = u.profile_id " +
-      " WHERE a.username = '" + req.body.username + "' " +
-      " and DATE(a.time) BETWEEN '" + req.body.startDate + "' AND '" + req.body.endDate + "' ")
-      " ORDER BY a.time ";
+      " u.username = atv.username " +
+      " LEFT JOIN softwares_profiles sp ON " +
+      " sp.software_id = s.process_name AND sp.profile_id = u.profile_id " +
+      " WHERE atv.username = '" + req.body.username + "' " +
+      " and DATE(atv.time) BETWEEN '" + req.body.startDate + "' AND '" + req.body.endDate + "' " +
+      " ORDER BY atv.time ");
 
     var horasProdutivas = 0;
     var horasImprodutivas = 0;
@@ -47,7 +46,7 @@ class UsersActivitiesController {
   }
 
     for (var n in activities) {  
-        var timeStamp = new Date(activities[n]['timestamp'])
+        var timeStamp = new Date(activities[n]['time_stamp'])
         //retira o fuso
         timeStamp = new Date(timeStamp.valueOf() - timeStamp.getTimezoneOffset() * 60000)
 
