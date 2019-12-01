@@ -44,7 +44,7 @@ routes.delete('/users/:username', UsersController.delete);
 
 routes.get('/softwares', SoftwaresController.index);
 
-routes.get('/usersActivities', UsersActivitiesController.index);
+routes.post('/usersActivities', UsersActivitiesController.index);
 
 routes.get('/profile/:id', ProfilesController.show);
 routes.get('/profile', ProfilesController.index);
@@ -60,6 +60,6 @@ routes.get(
 routes.put('/profilesSoftwares/:id', ProfilesSoftwaresController.update);
 routes.delete('/profilesSoftwares/:id', ProfilesSoftwaresController.delete);
 
-routes.get('/userProductivity', userProductivity.index)
+routes.get('/userProductivity', userProductivity.index);
 
 export default routes;
