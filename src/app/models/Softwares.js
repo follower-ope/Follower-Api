@@ -6,7 +6,6 @@ class Softwares extends Model {
       {
         process_name: Sequelize.STRING,
         name: Sequelize.STRING,
-        productive: Sequelize.BOOLEAN,
       },
       {
         sequelize,
