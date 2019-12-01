@@ -21,10 +21,6 @@ class UsersActivitiesController {
         `   and DATE(time) <= '${req.body.endDate}') atv`
     );
 
-    if (usersActivities[0].length == 0){
-      return res.status(400).json({ error: 'Nenhuma atividade encontrada para data informada.' });
-    }
-
     return res.status(200).json(usersActivities[0]);
   }
 }
