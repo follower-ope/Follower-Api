@@ -76,12 +76,10 @@ class UsersActivitiesController {
         produtivo = activities[n]['is_productive']
     }
     const data = {
-      userProductivity: {
         username: req.body.username,
         horasTotais: msToTime(horasTotais),
         horasProdutivas: msToTime((horasProdutivas)),
         horasImprodutivas: msToTime((horasImprodutivas))
-      }
     };
 
     return res.status(200).json(data)

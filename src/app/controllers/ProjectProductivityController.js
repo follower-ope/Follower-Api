@@ -76,13 +76,11 @@ class ProjectProductivityController {
         }
 
         const data = {
-            projectProductivity: {
                 project: project.id,
                 duration: project.time,
                 totalHoursSpent: msToTime(horasTotais),
                 productiveHours: msToTime(horasProdutivas),
-                unproductiveHours: msToTime(horasImprodutivas),
-            }
+                unproductiveHours: msToTime(horasImprodutivas)
         };
         return res.status(200).json(data)
     }
