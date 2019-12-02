@@ -42,27 +42,27 @@ class UsersActivitiesController {
     var activities = UsersActivities[0]
 
     if (activities.length == 0){
-      return res.status(400).json("Nenhuma atividade registrada para o usuário no período informado!")
+      return res.status(400).json({ error: "Nenhuma atividade registrada para o usuário no período informado!" })
   }
 
-    for (var n in activities) {  
+    for (var n in activities) {
         var timeStamp = new Date(activities[n]['time_stamp'])
         //retira o fuso
         timeStamp = new Date(timeStamp.valueOf() - timeStamp.getTimezoneOffset() * 60000)
 
-        //se for a 1a execução a variavel dataAux estará nula, 
+        //se for a 1a execução a variavel dataAux estará nula,
         //atribui os valores para a próxima iteração
-        //se não houver datas iguais não realiza a somatória        
+        //se não houver datas iguais não realiza a somatória
         if (activities[n]['date'] != dataAux){
             dataAux = activities[n]['date']
             horaAux = timeStamp.getTime()
             produtivo = activities[n]['is_productive']
             continue;
         }
-	
+
         //pega a diferença entre a atividade anterior e a atual
         horaDifAux = timeStamp.getTime() - horaAux
-        
+
         if (produtivo){
             horasProdutivas += horaDifAux
         } else {
