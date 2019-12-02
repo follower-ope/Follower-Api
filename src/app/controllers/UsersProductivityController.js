@@ -42,8 +42,8 @@ class UsersActivitiesController {
     var activities = UsersActivities[0]
 
     if (activities.length == 0){
-      return res.status(400).json({ error: "Nenhuma atividade registrada para o usuário no período informado!" })
-  }
+      return res.status(200).json({})
+    }
 
     for (var n in activities) {
         var timeStamp = new Date(activities[n]['time_stamp'])
