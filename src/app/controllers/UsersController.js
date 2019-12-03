@@ -2,12 +2,17 @@ import * as Yup from 'yup';
 import User from '../models/User';
 import Projects from '../models/Projects';
 import Profile from '../models/Profile';
+import Sequelize from 'sequelize';
 
 class UsersController {
   async index(req, res) {
     try {
+      const Op = Sequelize.Op;
+
       const users = await User.findAll({
-        where: { disabled_at: null },
+        where: { disabled_at: null, name: {
+          [Op.ne]: null
+        }},
         attributes: ['username', 'name', 'email', 'disabled_at'],
         include: [Projects, Profile],
       });

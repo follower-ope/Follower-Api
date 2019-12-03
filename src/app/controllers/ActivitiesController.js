@@ -1,5 +1,6 @@
 import { parseISO, startOfDay, endOfDay } from 'date-fns';
 import Sequelize from 'sequelize';
+import * as Yup from 'yup';
 
 import Activitie from '../models/Activitie';
 import User from '../models/User';
@@ -52,6 +53,42 @@ class ActivitiesController {
     return res.json(activitie);
   }
 
+  async update(req, res) {
+    try{
+      const schema = Yup.object().shape({
+        project_id: Yup.number(),
+      });
+
+      if (!(await schema.isValid(req.body))) {
+        return res.status(400).json({ error: 'Validation fail' });
+      }
+
+      const { id } = req.params;
+
+      const activitie = await Activitie.findOne({
+        where: {
+          id
+        }
+      });
+
+      if(!activitie) {
+        return res.status(400).json({ error: 'Activities does not exists' });
+      }
+
+      const { project_id } = req.body;
+
+      await Activitie.update({
+        project_id
+      },
+      { where: { id } }
+      );
+
+      return res.json({ message: 'Activitie updated' });
+    } catch(err) {
+      return res.status(500).json({error: 'Unable to update activtie'});
+    }
+  }
+
   async updateProjectByRange(req, res) {
     const { Op } = Sequelize;
     const { startDate, endDate, project_id } = req.body;
@@ -87,6 +124,31 @@ class ActivitiesController {
       return res.json({ message: 'Activities was updated sucessfull' });
     } catch (err) {
       return res.status(500).json({ message: 'Unable to update activities' });
+    }
+  }
+
+  async listProjectlessActivities(req, res) {
+    try {
+      const { username } = req.params;
+
+
+      const userExists = await User.findOne({ where: { username } });
+
+      if (!userExists) {
+        return res.status(400).json({ message: 'User does not exists' });
+      }
+
+      const activities = await Activitie.findAll({
+        where:{
+          username,
+          project_id: null
+        }
+      })
+
+
+      return res.json(activities);
+    } catch(err) {
+      return res.status(500).json({ error: 'Unable to get activities', err });
     }
   }
 }

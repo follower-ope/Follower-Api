@@ -26,9 +26,12 @@ routes.post('/profile', ProfilesController.store);
 
 routes.use(authMiddleware);
 
+routes.get('/activities/:username/projectless', ActivitiesController.listProjectlessActivities);
 routes.get('/activities', ActivitiesController.index);
 routes.get('/activities/:username', ActivitiesController.show);
+routes.put('/activities/:id', ActivitiesController.update);
 routes.put('/activities/:username', ActivitiesController.updateProjectByRange);
+
 
 routes.get('/projects', ProjectsController.index);
 routes.get('/projects/:id', ProjectsController.show);
@@ -58,14 +61,14 @@ routes.get('/profilesSoftwares', ProfilesSoftwaresController.index);
 routes.get(
   '/profilesSoftwares/:profileId',
   ProfilesSoftwaresController.indexProfile
-);
-routes.put('/profilesSoftwares/:id', ProfilesSoftwaresController.update);
-routes.delete('/profilesSoftwares/:id', ProfilesSoftwaresController.delete);
+  );
+  routes.put('/profilesSoftwares/:id', ProfilesSoftwaresController.update);
+  routes.delete('/profilesSoftwares/:id', ProfilesSoftwaresController.delete);
 
-routes.post('/userProductivity', UserProductivityController.index);
+  routes.post('/userProductivity', UserProductivityController.index);
 
-routes.get('/projectProductivity/:id', ProjectProductivityController.show);
+  routes.get('/projectProductivity/:id', ProjectProductivityController.show);
 
-routes.get('/projectProfileProductivity/:id', ProjectProfilesProductivityController.show);
+  routes.get('/projectProfileProductivity/:id', ProjectProfilesProductivityController.show);
 
-export default routes;
+  export default routes;
