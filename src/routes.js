@@ -22,9 +22,9 @@ routes.post('/activities', ActivitiesController.store);
 
 routes.post('/users', UsersController.store);
 
-routes.post('/profile', ProfilesController.store);
-
 routes.use(authMiddleware);
+
+routes.post('/profile', ProfilesController.store);
 
 routes.get('/activities', ActivitiesController.index);
 routes.get('/activities/:username', ActivitiesController.show);
@@ -36,7 +36,7 @@ routes.post('/projects', ProjectsController.store);
 routes.put('/projects/:id', ProjectsController.update);
 routes.delete('/projects/:id', ProjectsController.delete);
 
-routes.get('/projectUsers/:id', ProjectsController.indexUsers);
+routes.get('/projects/:id/users', ProjectsController.indexUsers);
 
 routes.get('/users/:username', UsersController.show);
 routes.get('/users', UsersController.index);
