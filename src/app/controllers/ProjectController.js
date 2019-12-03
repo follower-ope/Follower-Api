@@ -63,36 +63,35 @@ class ProjectsController {
   }
 
   async indexUsers(req, res) {
-    const project_id = req.params.id;
+    try {
 
-    const project = await Projects.findByPk(project_id);
+      const project_id = req.params.id;
 
-    if (!project) {
-      return res.status(400).json({ error: 'Project not found' });
+      const project = await Projects.findByPk(project_id);
+
+      if (!project) {
+        return res.status(400).json({ error: 'Project not found' });
+      }
+
+      const usersByProject = await User.findAll({
+        attributes: [
+          'username',
+          'name',
+          'email',
+          'project_id',
+          'profile_id',
+          'disabled_at',
+        ],
+        include: [Projects, Profile],
+        where: {
+          project_id, disabled_at: null
+        },
+      });
+      return res.json(usersByProject);
+    } catch (err) {
+      console.log(err)
+      return res.status(500).json({ message: 'Unable to get users' });
     }
-
-    const usersByProject = await User.findAll({
-      attributes: [
-        'username',
-        'name',
-        'email',
-        'project_id',
-        'profile_id',
-        'disabled_at',
-      ],
-      include: [Projects, Profile],
-      where: {
-        project_id,
-      },
-    });
-
-    if (!usersByProject) {
-      return res
-        .status(400)
-        .json({ error: `There are no users for project ${project.title}.` });
-    }
-
-    return res.json(usersByProject);
   }
 }
 

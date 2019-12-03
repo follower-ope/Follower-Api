@@ -22,9 +22,9 @@ routes.post('/activities', ActivitiesController.store);
 
 routes.post('/users', UsersController.store);
 
-routes.post('/profile', ProfilesController.store);
-
 routes.use(authMiddleware);
+
+routes.post('/profile', ProfilesController.store);
 
 routes.get('/activities/:username/projectless', ActivitiesController.listProjectlessActivities);
 routes.get('/activities', ActivitiesController.index);
@@ -32,14 +32,13 @@ routes.get('/activities/:username', ActivitiesController.show);
 routes.put('/activities/:id', ActivitiesController.update);
 routes.put('/activities/:username', ActivitiesController.updateProjectByRange);
 
+routes.get('/projects/:id/users', ProjectsController.indexUsers);
 
 routes.get('/projects', ProjectsController.index);
 routes.get('/projects/:id', ProjectsController.show);
 routes.post('/projects', ProjectsController.store);
 routes.put('/projects/:id', ProjectsController.update);
 routes.delete('/projects/:id', ProjectsController.delete);
-
-routes.get('/projectUsers/:id', ProjectsController.indexUsers);
 
 routes.get('/users/:username', UsersController.show);
 routes.get('/users', UsersController.index);
@@ -58,17 +57,17 @@ routes.delete('/profile/:id', ProfilesController.delete);
 
 routes.post('/profilesSoftwares', ProfilesSoftwaresController.store);
 routes.get('/profilesSoftwares', ProfilesSoftwaresController.index);
+routes.put('/profilesSoftwares/:id', ProfilesSoftwaresController.update);
+routes.delete('/profilesSoftwares/:id', ProfilesSoftwaresController.delete);
 routes.get(
   '/profilesSoftwares/:profileId',
   ProfilesSoftwaresController.indexProfile
   );
-  routes.put('/profilesSoftwares/:id', ProfilesSoftwaresController.update);
-  routes.delete('/profilesSoftwares/:id', ProfilesSoftwaresController.delete);
 
-  routes.post('/userProductivity', UserProductivityController.index);
+routes.post('/userProductivity', UserProductivityController.index);
 
-  routes.get('/projectProductivity/:id', ProjectProductivityController.show);
+routes.get('/projectProductivity/:id', ProjectProductivityController.show);
 
-  routes.get('/projectProfileProductivity/:id', ProjectProfilesProductivityController.show);
+routes.get('/projectProfileProductivity/:id', ProjectProfilesProductivityController.show);
 
-  export default routes;
+export default routes;
