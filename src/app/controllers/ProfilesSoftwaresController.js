@@ -62,6 +62,7 @@ class ProfilesSoftwaresController {
       where: {
         profile_id: req.params.profileId,
       },
+      include: [Softwares],
     });
 
     return res.json(profilesSoftware);

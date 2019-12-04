@@ -18,8 +18,8 @@ class softwares_profiles extends Model {
   }
 
   static associate(models) {
-    this.hasOne(models.Softwares, { foreignKey: 'process_name' });
-    this.belongsTo(models.Profile, { foreignKey: 'profile_id' });
+    this.belongsTo(models.Softwares, { foreignKey: 'software_id' });
+    this.hasOne(models.Profile, { foreignKey: 'profile_id' });
   }
 }
 
