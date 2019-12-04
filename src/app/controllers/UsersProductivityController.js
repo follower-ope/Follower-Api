@@ -78,8 +78,14 @@ class UsersActivitiesController {
     const data = {
         username: req.body.username,
         horasTotais: msToTime(horasTotais),
-        horasProdutivas: msToTime((horasProdutivas)),
-        horasImprodutivas: msToTime((horasImprodutivas))
+        horasProdutivas: {
+          "label": msToTime((horasProdutivas)),
+          "value": horasProdutivas
+        },
+        horasImprodutivas: {
+          "label": msToTime((horasImprodutivas)),
+          "value": horasImprodutivas
+        }
     };
 
     return res.status(200).json(data)
