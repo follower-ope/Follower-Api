@@ -77,7 +77,10 @@ class UsersActivitiesController {
     }
     const data = {
         username: req.body.username,
-        horasTotais: msToTime(horasTotais),
+        horasTotais: {
+          "label": msToTime(horasTotais),
+          "value": horasTotais
+        },
         horasProdutivas: {
           "label": msToTime((horasProdutivas)),
           "value": horasProdutivas

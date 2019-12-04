@@ -92,8 +92,19 @@ class ProjectProfilesProductivityController {
         
         //ajuste do formato de apresentação das horas
         for (var n in profiles){
-            profiles[n]['horasProdutivas'] = msToTime(profiles[n]['horasProdutivas']) 
-            profiles[n]['horasImprodutivas'] = msToTime(profiles[n]['horasImprodutivas'])
+            var auxProdutivas = 0;
+            var auxImprodutivas = 0;
+
+            auxProdutivas = profiles[n]['horasProdutivas']
+            auxImprodutivas = profiles[n]['horasImprodutivas']
+            profiles[n]['horasProdutivas'] = {
+                "label": msToTime(auxProdutivas),
+                "value": auxProdutivas
+            }
+            profiles[n]['horasImprodutivas'] = {
+                "label": msToTime(auxImprodutivas),
+                "value": auxImprodutivas
+            }
         }
 
         const data = {
