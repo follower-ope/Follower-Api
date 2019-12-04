@@ -4,7 +4,10 @@ class Softwares extends Model {
   static init(sequelize) {
     super.init(
       {
-        process_name: Sequelize.STRING,
+        process_name: {
+          type: Sequelize.STRING,
+          primaryKey: true,
+        },
         name: Sequelize.STRING,
       },
       {
