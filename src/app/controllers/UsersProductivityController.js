@@ -5,12 +5,12 @@ class UsersActivitiesController {
   async index(req, res) {
     try{
       var sequelize = require('sequelize');
-      
+
       var user = await User.findOne({
         where: {username: req.body.username},
       });
       
-      if (user){
+      if (!user){
         return res.status(400).json("Usuario nao encontrado na base de dados!")
       }
       
