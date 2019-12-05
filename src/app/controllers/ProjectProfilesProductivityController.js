@@ -4,7 +4,6 @@ import Projects from '../models/Projects';
 class ProjectProfilesProductivityController {
     async show(req, res) {
         try {
-            console.log(req.params.id)
             var project = await Projects.findOne({
                 where: {id: req.params.id},
             });
@@ -114,7 +113,6 @@ class ProjectProfilesProductivityController {
             };
             return res.status(200).json(data)
         } catch (err) {
-            console.log(err)
             return res.status(500).json({ error: "unable to show project productivity by profile."})
         }
     } 

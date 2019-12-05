@@ -1,4 +1,6 @@
 import Softwares from '../models/Softwares';
+import SoftwareProfiles from '../models/ProfilesSoftwares';
+import Profiles from '../models/Profile';
 
 class SoftwaresController {
   async store(softwareData) {
@@ -33,9 +35,28 @@ class SoftwaresController {
 
       return res.json(softwares);
     } catch (err) {
-      return res.status(500).json({ message: 'Unable to get softwares' });
+      return res.status(500).json({ error: 'Unable to get softwares' });
     }
   }
+
+  async indexProfileBySoftware(req, res) {
+    try {
+
+      const softwares = await SoftwareProfiles.findAll({
+        attributes: [],
+        where: {
+          software_id: req.params.id
+        },
+        include: [Profiles],
+      });
+
+      return res.json(softwares);
+    } catch (err) {
+      console.log(err)
+      return res.status(500).json({ error: 'Unable to get profiles by software' });
+    }
+  }
+
 }
 
 export default new SoftwaresController();

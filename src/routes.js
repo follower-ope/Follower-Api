@@ -47,6 +47,7 @@ routes.put('/users/:username', UsersController.update);
 routes.delete('/users/:username', UsersController.delete);
 
 routes.get('/softwares', SoftwaresController.index);
+routes.get('/softwares/:id/profiles', SoftwaresController.indexProfileBySoftware);
 
 routes.post('/usersActivities', UsersActivitiesController.index);
 
@@ -59,15 +60,14 @@ routes.post('/profilesSoftwares', ProfilesSoftwaresController.store);
 routes.get('/profilesSoftwares', ProfilesSoftwaresController.index);
 routes.put('/profilesSoftwares/:id', ProfilesSoftwaresController.update);
 routes.delete('/profilesSoftwares/:id', ProfilesSoftwaresController.delete);
-routes.get(
-  '/profilesSoftwares/:profileId',
-  ProfilesSoftwaresController.indexProfile
-  );
+routes.get('/profilesSoftwares/:profileId', ProfilesSoftwaresController.indexProfile);
 
 routes.post('/userProductivity', UserProductivityController.index);
 
 routes.get('/projectProductivity/:id', ProjectProductivityController.show);
 
 routes.get('/projectProfileProductivity/:id', ProjectProfilesProductivityController.show);
+
+routes.post('/projectProductivityByDay/:id', ProjectProductivityController.productivityByDay);
 
 export default routes;

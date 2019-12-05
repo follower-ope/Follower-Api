@@ -89,7 +89,6 @@ class ProjectsController {
       });
       return res.json(usersByProject);
     } catch (err) {
-      console.log(err)
       return res.status(500).json({ message: 'Unable to get users' });
     }
   }
