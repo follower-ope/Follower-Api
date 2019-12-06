@@ -261,8 +261,8 @@ class ProjectProductivityController {
 
                 if (!(projeto in projetos)) {
                     projetos[projeto] = {
-                        title: activities[n]['title'],
-                        activities[n]['description'],
+                        titulo: activities[n]['title'],
+                        descricao: activities[n]['description'],
                         duracao: {
                             "label": msToTime(activities[n]['time'] * 3600000),
                             "value": activities[n]['time'] * 3600000
