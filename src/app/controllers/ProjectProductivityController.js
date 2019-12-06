@@ -7,11 +7,11 @@ class ProjectProductivityController {
             var project = await Projects.findOne({
                 where: {id: req.params.id},
             });
-            
+
             if (!project){
                 return res.status(400).json("Projeto não encontrado na base de dados!")
             }
-            
+
             //Produtividade por projeto.
             const ProjectActivities = await Sequelize.query(
                 " SELECT " +
@@ -34,7 +34,7 @@ class ProjectProductivityController {
                 " AND software_profile.profile_id = users.profile_id " +
                 " WHERE project.id =  " + project.id +
                 " ORDER BY activitie.username,  activitie.time ");
-                
+
             var horasProdutivas = 0;
             var horasImprodutivas = 0;
             var dataAux = "";
@@ -44,12 +44,12 @@ class ProjectProductivityController {
             var produtivo = "";
             var activities = ProjectActivities[0]
             var username = "";
-            
+
             for (var n in activities) {
                 var timeStamp = new Date(activities[n]['time_stamp'])
                 //retira o fuso
                 timeStamp = new Date(timeStamp.valueOf() - timeStamp.getTimezoneOffset() * 60000)
-                
+
                 if (activities[n]['date'] != dataAux || activities[n]['username'] != username){
                     username = activities[n]['username']
                     dataAux = activities[n]['date']
@@ -57,10 +57,10 @@ class ProjectProductivityController {
                     produtivo = activities[n]['is_productive']
                     continue;
                 }
-        
+
                 //pega a diferença entre a atividade anterior e a atual
                 horaDifAux = timeStamp.getTime() - horaAux
-                
+
                 if (produtivo){
                     horasProdutivas += horaDifAux
                 } else {
@@ -74,7 +74,7 @@ class ProjectProductivityController {
                 horaAux = timeStamp.getTime()
                 produtivo = activities[n]['is_productive']
             }
-        
+
             const data = {
                 project: project.id,
                 duration: project.time,
@@ -102,11 +102,11 @@ class ProjectProductivityController {
             var project = await Projects.findOne({
                 where: {id: req.params.id},
             });
-            
+
             if (!project){
                 return res.status(400).json("Projeto não encontrado na base de dados!")
             }
-            
+
             //Produtividade por projeto.
             const ProjectActivities = await Sequelize.query(
                 " SELECT " +
@@ -130,7 +130,7 @@ class ProjectProductivityController {
                 " WHERE project.id =  " + project.id +
                 "   AND DATE(activitie.time) BETWEEN '" + req.body.startDate + "' AND '" + req.body.endDate + "' " +
                 " ORDER BY activitie.username,  activitie.time ");
-                
+
             var dataAux = "";
             var horaAux = 0;
             var horaDifAux = 0;
@@ -153,7 +153,7 @@ class ProjectProductivityController {
                     produtivo = activities[n]['is_productive']
                     continue;
                 }
-                
+
                 date = activities[n]['date']
 
                 if (!(date in dates)) {
@@ -165,7 +165,7 @@ class ProjectProductivityController {
 
                 //pega a diferença entre a atividade anterior e a atual
                 horaDifAux = timeStamp.getTime() - horaAux
-                
+
                 if (produtivo){
                     dates[date]['horasProdutivas'] += horaDifAux
                 } else {
@@ -185,7 +185,7 @@ class ProjectProductivityController {
             for (var n in dates){
                 var auxProdutivas = 0;
                 var auxImprodutivas = 0;
-                
+
                 auxProdutivas = dates[n]['horasProdutivas']
                 auxImprodutivas = dates[n]['horasImprodutivas']
                 dates[n]['horasProdutivas'] = {
@@ -197,7 +197,7 @@ class ProjectProductivityController {
                     "value": auxImprodutivas
                 }
             }
-        
+
             const data = {
                 project: project.id,
                 duration: project.time,
@@ -210,12 +210,13 @@ class ProjectProductivityController {
     }
 
     async index(req, res) {
-        try{            
+        try{
             //Produtividade por projeto.
             const ProjectActivities = await Sequelize.query(
                 " SELECT " +
                 "     project.id, " +
                 "     project.title, " +
+                "     project.description, " +
                 "     project.time, " +
                 "     users.username, " +
                 "     Date(activitie.time) date, " +
@@ -242,12 +243,12 @@ class ProjectProductivityController {
             var username = "";
             var projetos = {};
             var projeto = "";
-            
+
             for (var n in activities) {
                 var timeStamp = new Date(activities[n]['time_stamp'])
                 //retira o fuso
                 timeStamp = new Date(timeStamp.valueOf() - timeStamp.getTimezoneOffset() * 60000)
-                
+
                 if (activities[n]['date'] != dataAux || activities[n]['username'] != username){
                     username = activities[n]['username']
                     dataAux = activities[n]['date']
@@ -260,6 +261,8 @@ class ProjectProductivityController {
 
                 if (!(projeto in projetos)) {
                     projetos[projeto] = {
+                        title: activities[n]['title'],
+                        activities[n]['description'],
                         duracao: {
                             "label": msToTime(activities[n]['time'] * 3600000),
                             "value": activities[n]['time'] * 3600000
@@ -272,7 +275,7 @@ class ProjectProductivityController {
 
                 //pega a diferença entre a atividade anterior e a atual
                 horaDifAux = timeStamp.getTime() - horaAux
-                
+
                 if (produtivo){
                     projetos[projeto]['horasProdutivas'] += horaDifAux
                 } else {
@@ -290,13 +293,13 @@ class ProjectProductivityController {
                 horaAux = timeStamp.getTime()
                 produtivo = activities[n]['is_productive']
             }
-            
+
             //ajuste do formato de apresentação das horas
             for (var n in projetos){
                 var auxProdutivas = 0;
                 var auxImprodutivas = 0;
                 var auxTotais = 0;
-                
+
                 auxProdutivas = projetos[n]['horasProdutivas']
                 auxImprodutivas = projetos[n]['horasImprodutivas']
                 auxTotais = projetos[n]['horasTotais']
