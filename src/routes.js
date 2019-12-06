@@ -66,6 +66,8 @@ routes.post('/userProductivity', UserProductivityController.index);
 
 routes.get('/projectProductivity/:id', ProjectProductivityController.show);
 
+routes.get('/projectProductivity', ProjectProductivityController.index)
+
 routes.get('/projectProfileProductivity/:id', ProjectProfilesProductivityController.show);
 
 routes.post('/projectProductivityByDay/:id', ProjectProductivityController.productivityByDay);
